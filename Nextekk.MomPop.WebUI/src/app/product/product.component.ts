@@ -42,7 +42,11 @@ export class ProductComponent implements OnInit {
     searchProduct($event) {
         const value = $event.currentTarget.value.toLowerCase();
 
-        this.products = this._products.filter((product: Product) => product.name.toLowerCase().includes(value));
+        this.products = this._products.filter(
+            (product: Product) => 
+                    product.name.toLowerCase().includes(value) || 
+                    product.price.toString().includes(value)
+        );
     }
 
     addProduct(form: NgForm) {

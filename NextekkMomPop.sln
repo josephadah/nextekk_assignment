@@ -41,6 +41,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Nextekk.MomPop.WebUI", "Nex
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "51448"
+		SlnRelativePath = "Nextekk.MomPop.WebUI\"
 	EndProjectSection
 EndProject
 Global

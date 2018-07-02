@@ -42,7 +42,11 @@ export class HomeComponent implements OnInit {
     searchProduct($event) {
         const value = $event.currentTarget.value.toLowerCase();
 
-        this.products = this._products.filter((product: Product) => product.name.toLowerCase().includes(value));
+        this.products = this._products.filter(
+            (product: Product) => 
+                    product.name.toLowerCase().includes(value) || 
+                    product.price.toString().includes(value)
+        );
 
         /* ES 5 function
         this.products.filter(function (product: Product) {
