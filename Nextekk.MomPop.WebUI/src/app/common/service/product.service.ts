@@ -23,6 +23,7 @@ export class ProductService {
     }
 
     deleteProduct(id: number): Observable<any> {
+        console.log('called');
         return this._http.delete(this.productApiURL, { params: { id: id.toString() } });
     }
 

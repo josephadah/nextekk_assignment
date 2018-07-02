@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnChanges } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Product } from "../common/models/product.model";
 import { ProductService } from "../common/service/product.service";
@@ -10,12 +10,15 @@ import { ProductService } from "../common/service/product.service";
 })
 export class ProductComponent implements OnInit {
     products: Product[];
-    newProduct: Product;
+    editingProductId = 0;
 
     private _products: Product[];
 
     @ViewChild('form')
     private form: NgForm;
+
+    @ViewChild('editform')
+    private editform: NgForm;
 
     get canSave(): boolean {
         return this.form.valid;
@@ -24,10 +27,13 @@ export class ProductComponent implements OnInit {
     constructor(private productService: ProductService) {
         this.products = [];
         this._products = [];
-        this.newProduct = new Product();
     }
 
     ngOnInit() {
+        this.fetchAllProducts();
+    }
+
+    fetchAllProducts() {
         this.productService.getAllProducts().subscribe(data => {
             this.products = this._products = data;
         });
@@ -39,24 +45,68 @@ export class ProductComponent implements OnInit {
         this.products = this._products.filter((product: Product) => product.name.toLowerCase().includes(value));
     }
 
-    addProduct() {
+    addProduct(form: NgForm) {
         if (this.form.dirty && this.form.valid) {
-            this.productService.addProduct(this.newProduct).subscribe(data => {
-                this.newProduct.id = data;
-                this._products.push(this.newProduct);
+            const value = form.value;
+            let newProduct: Product = new Product();
+            newProduct.name = value.name;
+            newProduct.price = value.price;
+            newProduct.stock = value.stock;
+            newProduct.description = value.description;
+
+            this.productService.addProduct(newProduct).subscribe(data => {
+                newProduct.id = data;
+                this._products.push(newProduct);
                 this.products = this._products;
-                alert(`${this.newProduct.name} was added successfully`);
+                alert(`${newProduct.name} was added successfully`);
             });
+
+            form.reset();
+        }
+
+    }
+
+    isEditing(id) {
+        if (id == this.editingProductId) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+
+    editProduct(editform: NgForm, product: Product) {
+        // this.productService.updateProduct(product).subscribe();
+
+        if (this.editform.dirty && this.editform.valid) {
+            const value = editform.value;
+
+            product.name = value.name;
+            product.price = value.price;
+            product.stock = value.stock;
+            product.description = value.description;
+            
+            this.productService.updateProduct(product).subscribe(data => {
+                // this.editedProduct.id = data;
+                // this._products.push(this.editedProduct);
+                // this.products = this._products;
+                alert(`${product.name} was updated successfully`);
+            });
+
+            this.editingProductId = 0;
         }
     }
 
-    updateProduct(product: Product) {
-        this.productService.updateProduct(product).subscribe();
-    }
-
-    deleteProduct(id: number) {
+    deleteProduct(id: number, product: Product) {
+        let productName = product.name;
         this.productService.deleteProduct(id).subscribe(data => {
-            alert('Product was removed successfully');
+            let index = this.products.indexOf(product);
+            if(index > -1) {
+                this._products.splice(index, 1);
+            }
+            this.products = this._products;
+
+            alert(`${productName} was deleted successfully`);
         });
     }
 }

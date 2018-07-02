@@ -5,49 +5,113 @@
 </div>
 
 <div class="row">
+    <!-- ADD NEW ITEM -->
     <div class="col-sm-4 box-shadow">
-        <form class="form" #form="ngForm">
+        <form class="form" (ngSubmit)="addProduct(form)" #form="ngForm">
             <div class="row">
                 <div class="col form-group">
-                    <input type="text" name="name" class="form-control" [(ngModel)]="newProduct.name" placeholder="Product Name" required />
+                    <input type="text" 
+                        name="name" class="form-control"  
+                        placeholder="Product Name" 
+                        ngModel required />
                 </div>
             </div>
             <div class="row">
                 <div class="col form-group">
-                    <input type="number" name="price" class="form-control" [(ngModel)]="newProduct.price" placeholder="Price" required>
+                    <input type="number" name="price" 
+                        class="form-control" 
+                        placeholder="Price" 
+                        ngModel required>
                 </div>
                 <div class="col form-group">
-                    <input type="number" name="stock" class="form-control" [(ngModel)]="newProduct.stock" placeholder="Count" required>
+                    <input type="number" name="stock" 
+                        class="form-control" 
+                        placeholder="Count" 
+                        ngModel required>
                 </div>
             </div>
             <div class="row">
                 <div class="col form-group">
-                    <textarea name="description" [(ngModel)]="newProduct.description" rows="4" class="form-control" placeholder="Description"></textarea>
+                    <textarea name="description" 
+                        rows="4" class="form-control" 
+                        placeholder="Description"
+                        ngModel required></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <input type="button" class="btn btn-primary btn-lg" value="Save" (click)="addProduct()" />
+                <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </form>    
     </div>
-  <div class="col-sm-4 box-shadow" *ngFor="let product of products">
-    <div class="card-header">
-      <h4 class="my-0 font-weight-normal">{{product.name}} 
-          <i class="float-right fa fa-trash" (click)="deleteProduct(product.id)"></i>&nbsp;
-          <i class="float-right fa fa-pencil"></i>
-      </h4>
+
+    <!-- SHOW AND EDIT ITEM -->
+  <div class="col-sm-4 box-shadow" *ngFor="let product of products; let i = index">
+      <!-- SHOW -->
+    <div *ngIf="!isEditing(product.id)">
+        <div class="card-header">
+        <h4 class="my-0 font-weight-normal">{{product.name}} 
+            <i class="float-right fa fa-trash" (click)="deleteProduct(product.id, product)"></i>&nbsp;
+            <i class="float-right fa fa-pencil" (click)="editingProductId=product.id"></i>
+        </h4>
+        </div>
+        <div class="card-body">
+        <input class="form-control" type="checkbox" checked>
+        <h3>{{product.price | currency}}</h3>
+        <p>
+            <Strong>Stock
+            <br /> {{product.stock}}
+            </Strong>
+        </p>
+        <p>
+            {{product.description}}
+        </p>
+        </div>
+    </div> <!-- END OF SHOWING -->
+    <!-- EDITING  -->
+    <div *ngIf="isEditing(product.id)">
+        <div class="col-sm-12 box-shadow">
+            <h3>Edit {{product.name}}</h3>
+            <form class="form" (ngSubmit)="editProduct(editform, product)" #editform="ngForm">
+                <div class="row">
+                    <div class="col form-group">
+                        <input type="text" 
+                            name="name" class="form-control"  
+                            [ngModel]="product.name" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <input type="number" name="price" 
+                            class="form-control" 
+                            [ngModel]="product.price" 
+                            required>
+                    </div>
+                    <div class="col form-group">
+                        <input type="number" name="stock" 
+                            class="form-control" 
+                            [ngModel]="product.stock"
+                            required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <textarea name="description" 
+                            rows="4" class="form-control" 
+                            placeholder="Description"
+                            [ngModel]="product.description"
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-danger" 
+                        type="button"
+                        (click)="editingProductId=0">Cancel
+                    </button>
+                </div>
+            </form>    
+        </div>
     </div>
-    <div class="card-body">
-      <input class="form-control" type="checkbox" checked>
-      <h3>{{product.price | currency}}</h3>
-      <p>
-        <Strong>Stock
-          <br /> {{product.stock}}
-        </Strong>
-      </p>
-      <p>
-        {{product.description}}
-      </p>
-    </div>
+    <!-- END OF EDITING -->
   </div>
 </div>

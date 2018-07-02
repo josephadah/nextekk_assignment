@@ -13,7 +13,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Nextekk.MomPop.Database", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nextekk.MomPop.Data", "Nextekk.MomPop.Data\Nextekk.MomPop.Data.csproj", "{837A18EE-EA8B-421E-BF96-BA396E7E8694}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nextekk.MomPop.Tests", "Nextekk.MomPop.Tests\Nextekk.MomPop.Tests.csproj", "{2AEF6BC6-F9C1-429E-BBE1-D3C3D9218250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nextekk.MomPop.Tests", "Nextekk.MomPop.Tests\Nextekk.MomPop.Tests.csproj", "{2AEF6BC6-F9C1-429E-BBE1-D3C3D9218250}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Presentation", "1.Presentation", "{2C8F6DE5-0E41-482F-B8C5-E9249EF11642}"
 EndProject
@@ -22,6 +22,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{751256A3-A447-4A76-8CDC-76A5B9659AB6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Tests", "4.Tests", "{264B1C79-9581-4B47-AF96-2FC0E1C565DD}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Nextekk.MomPop.WebUI", "Nextekk.MomPop.WebUI\", "{C763420C-211F-4A47-8B73-E9FF3659637A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51448"
+		Debug.AspNetCompiler.PhysicalPath = "Nextekk.MomPop.WebUI\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51448\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51448"
+		Release.AspNetCompiler.PhysicalPath = "Nextekk.MomPop.WebUI\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51448\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51448"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +75,10 @@ Global
 		{2AEF6BC6-F9C1-429E-BBE1-D3C3D9218250}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AEF6BC6-F9C1-429E-BBE1-D3C3D9218250}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AEF6BC6-F9C1-429E-BBE1-D3C3D9218250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C763420C-211F-4A47-8B73-E9FF3659637A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C763420C-211F-4A47-8B73-E9FF3659637A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C763420C-211F-4A47-8B73-E9FF3659637A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C763420C-211F-4A47-8B73-E9FF3659637A}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +90,7 @@ Global
 		{B170625D-95EF-4691-A77A-93379FFFE3A4} = {751256A3-A447-4A76-8CDC-76A5B9659AB6}
 		{837A18EE-EA8B-421E-BF96-BA396E7E8694} = {751256A3-A447-4A76-8CDC-76A5B9659AB6}
 		{2AEF6BC6-F9C1-429E-BBE1-D3C3D9218250} = {264B1C79-9581-4B47-AF96-2FC0E1C565DD}
+		{C763420C-211F-4A47-8B73-E9FF3659637A} = {2C8F6DE5-0E41-482F-B8C5-E9249EF11642}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {999F325C-F6A2-4597-B3DB-0951DFD25A46}
