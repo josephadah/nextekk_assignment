@@ -1,5 +1,5 @@
 import { Cart } from "../common/models/cart.model";
-import { Component, Input, ViewChild, EventEmitter, Output } from "@angular/core";
+import { Component, Input, ViewChild, EventEmitter, Output, OnInit } from "@angular/core";
 import { Product } from "../common/models/product.model";
 import { BsModalService, BsModalRef } from "ngx-bootstrap";
 import { ProductService } from "../common/service/product.service";
@@ -8,7 +8,7 @@ import { ProductService } from "../common/service/product.service";
     selector: 'app-cart',
     templateUrl: './cart.component.html'
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
     carts: Cart[];
 
     @Output()
@@ -34,6 +34,8 @@ export class CartComponent {
         this.show = false;
         this.onCheckOutSuccessful = new EventEmitter<object[]>();
     }
+
+    ngOnInit(): void { } 
 
     addItemToCarts(product: Product) {
         let cartInList = this.carts.find(x => x.id == product.id);
@@ -66,9 +68,10 @@ export class CartComponent {
             this.onCheckOutSuccessful.emit(itemsToCheckoutDTO);
             this.modalRef.hide();
         });
+
     }
 
     remove(id: number) {
         this.carts = this.carts.filter(x => x.id != id);
     }
-}
+} 

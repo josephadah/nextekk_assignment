@@ -47,6 +47,8 @@ namespace Nextekk.MomPop.Business
                 product.Stock -= orderQuantity;
             }
 
+            // send hub method
+
             await  _productRepository.Update(products);
             await CreateOrder(orderItems.ToList());
         }

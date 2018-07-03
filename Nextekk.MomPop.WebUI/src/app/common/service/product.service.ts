@@ -29,5 +29,5 @@ export class ProductService {
 
     checkout(orders: object[]) {
         return this._http.post(this.checkoutApiURL, orders);
-    }
+    } 
 }

@@ -18,6 +18,7 @@ using Nextekk.MomPop.Business;
 using Nextekk.MomPop.Core.Repository;
 using Nextekk.MomPop.Data.Context;
 using Nextekk.MomPop.Data.Repositories;
+using Nextekk.MomPop.Web.Hubs;
 
 namespace Nextekk.MomPop.Web
 {
@@ -48,13 +49,15 @@ namespace Nextekk.MomPop.Web
 
             services.AddDbContext<NextekkMomPopDbContext>(opt => opt.UseSqlServer(connectionString));
 
-            services.AddCors(x =>
+            services.AddCors(options =>
             {
-                x.AddPolicy("myCorsPolicy", p =>
+                options.AddPolicy("myCorsPolicy", 
+                    builder =>
                 {
-                    p.AllowAnyHeader();
-                    p.AllowAnyOrigin();
-                    p.AllowAnyMethod();
+                    builder.AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowAnyOrigin()
+                            .AllowCredentials();
                 });
             });
 
@@ -77,6 +80,8 @@ namespace Nextekk.MomPop.Web
 
                 opt.IncludeXmlComments(string.Format(basePath));
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +98,11 @@ namespace Nextekk.MomPop.Web
             app.UseSwaggerUI(x =>
             {
                 x.SwaggerEndpoint("/swagger/v1/swagger.json", "NexTekk Mom Pop");
+            });
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<StockHub>("/stockhub");
             });
 
             app.UseMvc();

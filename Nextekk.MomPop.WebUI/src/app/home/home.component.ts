@@ -3,6 +3,7 @@ import { ProductService } from "../common/service/product.service";
 import { Product } from "../common/models/product.model";
 import { CartComponent } from "../cart/cart.component";
 import { Cart } from "../common/models/cart.model";
+import {HubConnection, HubConnectionBuilder} from "@aspnet/signalr";
 
 @Component({
     selector: 'app-home',
@@ -12,6 +13,7 @@ import { Cart } from "../common/models/cart.model";
 export class HomeComponent implements OnInit {
     show: boolean;
     products: Product[];
+    public stockConnection: HubConnection;
     
     get totalItemsInCart(): number {
         return this.cartComponent && this.cartComponent.totalItems;
@@ -37,6 +39,21 @@ export class HomeComponent implements OnInit {
             this.products = this._products;
             */
         });
+
+        this.stockConnection = new HubConnectionBuilder()
+            .withUrl("http://localhost:50781/stockhub")
+            .build();
+
+        this.stockConnection.on('stockChanged', () => {
+            this.refreshProducts();
+        });
+
+        this.stockConnection.start().
+            then(() => {
+                console.log('connected');
+            }).
+            catch(err => console.error(err.toString()));
+        
     }
 
     searchProduct($event) {
@@ -64,6 +81,16 @@ export class HomeComponent implements OnInit {
         this.cartComponent.showCart();
     }
 
+    echo() {
+        this.stockConnection.invoke("UpdateStock");
+    }
+
+    refreshProducts() {
+        this._productService.getAllProducts().subscribe(data => {
+            this.products = this._products = data;
+        });
+    }
+
     checkOutSuccessful($event: any[]) {
         this._products.forEach(product => {
             const itemInCart = $event.find(x => x.productId == product.id);
@@ -72,5 +99,7 @@ export class HomeComponent implements OnInit {
                 product.stock -= itemInCart.quantity;
             }
         });
+
+        this.echo();        
     }
 }
