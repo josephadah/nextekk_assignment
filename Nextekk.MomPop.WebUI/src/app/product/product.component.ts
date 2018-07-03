@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, OnChanges } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Product } from "../common/models/product.model";
 import { ProductService } from "../common/service/product.service";
+import {HubConnection, HubConnectionBuilder} from "@aspnet/signalr";
 
 @Component({
     selector: 'app-product',
@@ -11,6 +12,8 @@ import { ProductService } from "../common/service/product.service";
 export class ProductComponent implements OnInit {
     products: Product[];
     editingProductId = 0;
+
+    public stockConnection: HubConnection;
 
     private _products: Product[];
 
@@ -30,10 +33,24 @@ export class ProductComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.fetchAllProducts();
+        this.refreshProducts();
+
+        this.stockConnection = new HubConnectionBuilder()
+            .withUrl("http://localhost:50781/stockhub")
+            .build();
+
+        this.stockConnection.on('stockChanged', () => {
+            this.refreshProducts();
+        });
+
+        this.stockConnection.start().
+            then(() => {
+                console.log('connected');
+            }).
+            catch(err => console.error(err.toString()));
     }
 
-    fetchAllProducts() {
+    refreshProducts() {
         this.productService.getAllProducts().subscribe(data => {
             this.products = this._products = data;
         });
@@ -49,6 +66,10 @@ export class ProductComponent implements OnInit {
         );
     }
 
+    echo() {
+        this.stockConnection.invoke("UpdateStock");
+    }
+
     addProduct(form: NgForm) {
         if (this.form.dirty && this.form.valid) {
             const value = form.value;
@@ -62,6 +83,7 @@ export class ProductComponent implements OnInit {
                 newProduct.id = data;
                 this._products.push(newProduct);
                 this.products = this._products;
+                this.echo();
                 alert(`${newProduct.name} was added successfully`);
             });
 
@@ -94,6 +116,9 @@ export class ProductComponent implements OnInit {
                 // this.editedProduct.id = data;
                 // this._products.push(this.editedProduct);
                 // this.products = this._products;
+
+                this.echo();
+                
                 alert(`${product.name} was updated successfully`);
             });
 
@@ -109,6 +134,8 @@ export class ProductComponent implements OnInit {
                 this._products.splice(index, 1);
             }
             this.products = this._products;
+
+            this.echo();
 
             alert(`${productName} was deleted successfully`);
         });

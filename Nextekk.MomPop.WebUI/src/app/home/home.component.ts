@@ -13,6 +13,7 @@ import {HubConnection, HubConnectionBuilder} from "@aspnet/signalr";
 export class HomeComponent implements OnInit {
     show: boolean;
     products: Product[];
+    
     public stockConnection: HubConnection;
     
     get totalItemsInCart(): number {
