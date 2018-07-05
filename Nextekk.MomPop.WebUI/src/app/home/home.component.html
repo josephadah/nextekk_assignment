@@ -1,5 +1,9 @@
+<alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" *ngIf="alert.message">{{alert.message}}</alert>
+
 <div class="float-right" id="cartContainer">
-    <i id="shoppingCart" class="fa fa-shopping-cart" (click)="toggleCartView()">{{totalItemsInCart}}</i>
+    <i id="shoppingCart" class="fa fa-shopping-cart" (click)="toggleCartView()">
+      <span class="m-2">{{totalItemsInCart}}</span>
+    </i>
     <app-cart (onCheckOutSuccessful)="checkOutSuccessful($event)"></app-cart>
 </div>
 
@@ -10,12 +14,11 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-4 box-shadow" *ngFor="let product of products">
+  <div class="col-md-4 box-shadow" *ngFor="let product of products">
     <div class="card-header">
       <h4 class="my-0 font-weight-normal">{{product.name}}</h4>
     </div>
     <div class="card-body">
-      <input class="form-control" type="checkbox" checked>
       <h3>{{product.price | currency}}</h3>
       <p>
         <Strong>Stock

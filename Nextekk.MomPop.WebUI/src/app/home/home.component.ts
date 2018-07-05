@@ -13,6 +13,11 @@ import {HubConnection, HubConnectionBuilder} from "@aspnet/signalr";
 export class HomeComponent implements OnInit {
     show: boolean;
     products: Product[];
+    alert = {
+        type: "success", 
+        message: '', 
+        timeout: 5000
+    }
     
     public stockConnection: HubConnection;
     
@@ -101,6 +106,13 @@ export class HomeComponent implements OnInit {
             }
         });
 
-        this.echo();        
+        this.echo(); 
+        
+        this.alert.message = "You have Checkedout Successfully";
+        setTimeout(
+            () => {
+                this.alert.message = '';
+            }, 
+            this.alert.timeout);
     }
 }

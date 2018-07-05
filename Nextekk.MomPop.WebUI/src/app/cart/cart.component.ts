@@ -6,7 +6,7 @@ import { ProductService } from "../common/service/product.service";
 
 @Component({
     selector: 'app-cart',
-    templateUrl: './cart.component.html'
+    templateUrl: './cart.component.html', 
 })
 export class CartComponent implements OnInit {
     carts: Cart[];

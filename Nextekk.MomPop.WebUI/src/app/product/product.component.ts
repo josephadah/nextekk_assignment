@@ -12,6 +12,11 @@ import {HubConnection, HubConnectionBuilder} from "@aspnet/signalr";
 export class ProductComponent implements OnInit {
     products: Product[];
     editingProductId = 0;
+    alert = {
+        type: "success", 
+        message: '', 
+        timeout: 5000
+    }
 
     public stockConnection: HubConnection;
 
@@ -84,7 +89,13 @@ export class ProductComponent implements OnInit {
                 this._products.push(newProduct);
                 this.products = this._products;
                 this.echo();
-                alert(`${newProduct.name} was added successfully`);
+
+                this.alert.message = `${newProduct.name} was Added Successfully.`;
+                setTimeout(
+                    () => {
+                        this.alert.message = '';
+                    }, 
+                    this.alert.timeout);
             });
 
             form.reset();
@@ -119,7 +130,12 @@ export class ProductComponent implements OnInit {
 
                 this.echo();
                 
-                alert(`${product.name} was updated successfully`);
+                this.alert.message = `${product.name} was Edited Successfully.`;
+                setTimeout(
+                    () => {
+                        this.alert.message = '';
+                    }, 
+                    this.alert.timeout);
             });
 
             this.editingProductId = 0;
@@ -137,7 +153,15 @@ export class ProductComponent implements OnInit {
 
             this.echo();
 
-            alert(`${productName} was deleted successfully`);
+            // alert(`${productName} was deleted successfully`);
+            this.alert.type = "danger";
+            this.alert.message = `${productName} was Deleted Successfully.`;
+            setTimeout(
+                () => {
+                    this.alert.message = '';
+                    this.alert.type = "success";
+                }, 
+                this.alert.timeout);
         });
     }
 }

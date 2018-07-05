@@ -6,4 +6,5 @@ div.box-shadow {
 .fa {
     cursor: pointer;
     padding: 2px;
+    margin: 2px;
 }

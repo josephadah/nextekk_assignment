@@ -8,7 +8,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductService } from './common/service/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './cart/cart.component';
-import { ModalModule } from "ngx-bootstrap";
+import { ModalModule, AlertModule } from "ngx-bootstrap";
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { ModalModule } from "ngx-bootstrap";
       { path: '', component: HomeComponent },
       { path: 'product', component: ProductComponent }
     ]),
-    ModalModule.forRoot()
+    ModalModule.forRoot(), 
+    AlertModule.forRoot()
   ],
   providers: [
     ProductService

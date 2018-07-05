@@ -1,13 +1,16 @@
+<alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" *ngIf="alert.message">{{alert.message}}</alert>
+
 <h1 class="display-4">Products</h1>
 
 <div class="form-group">
   <input type="text" class="form-control" placeholder="Search" (keyup)="searchProduct($event)" />
 </div>
 
-<div class="row">
+<div class="row mx-auto">
     <!-- ADD NEW ITEM -->
-    <div class="col-sm-4 box-shadow">
-        <form class="form" (ngSubmit)="addProduct(form)" #form="ngForm">
+    <div class="col-md-3 box-shadow m-3">
+        <form class="form p-3" (ngSubmit)="addProduct(form)" #form="ngForm">
+            <h5>Add A New Product</h5>
             <div class="row">
                 <div class="col form-group">
                     <input type="text" 
@@ -33,29 +36,28 @@
             <div class="row">
                 <div class="col form-group">
                     <textarea name="description" 
-                        rows="4" class="form-control" 
+                        rows="2" class="form-control" 
                         placeholder="Description"
                         ngModel required></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit">Save</button>
+                <button class="btn btn-primary btn-block p-1" type="submit">Save</button>
             </div>
         </form>    
     </div>
 
     <!-- SHOW AND EDIT ITEM -->
-  <div class="col-sm-4 box-shadow" *ngFor="let product of products; let i = index">
+  <div class="col-md-3 box-shadow m-3" *ngFor="let product of products; let i = index">
       <!-- SHOW -->
     <div *ngIf="!isEditing(product.id)">
         <div class="card-header">
         <h4 class="my-0 font-weight-normal">{{product.name}} 
-            <i class="float-right fa fa-trash" (click)="deleteProduct(product.id, product)"></i>&nbsp;
+            <i class="float-right fa fa-trash m-1" (click)="deleteProduct(product.id, product)"></i>&nbsp;
             <i class="float-right fa fa-pencil" (click)="editingProductId=product.id"></i>
         </h4>
         </div>
         <div class="card-body">
-        <input class="form-control" type="checkbox" checked>
         <h3>{{product.price | currency}}</h3>
         <p>
             <Strong>Stock
@@ -69,8 +71,8 @@
     </div> <!-- END OF SHOWING -->
     <!-- EDITING  -->
     <div *ngIf="isEditing(product.id)">
-        <div class="col-sm-12 box-shadow">
-            <h3>Edit {{product.name}}</h3>
+        <div class="col-sm-12 box-shadow p-3">
+            <h5>Edit {{product.name}}</h5>
             <form class="form" (ngSubmit)="editProduct(editform, product)" #editform="ngForm">
                 <div class="row">
                     <div class="col form-group">
@@ -96,15 +98,15 @@
                 <div class="row">
                     <div class="col form-group">
                         <textarea name="description" 
-                            rows="4" class="form-control" 
+                            rows="2" class="form-control" 
                             placeholder="Description"
                             [ngModel]="product.description"
                             required></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Update</button>
-                    <button class="btn btn-danger" 
+                    <button class="btn btn-primary btn-sm m-1" type="submit">Update</button>
+                    <button class="btn btn-danger btn-sm m-1" 
                         type="button"
                         (click)="editingProductId=0">Cancel
                     </button>
